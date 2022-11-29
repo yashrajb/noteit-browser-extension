@@ -1,0 +1,29 @@
+{
+   "manifest_version": 3,
+   "background": {
+      "service_worker": "background.js",
+      "type":"module"
+   },
+   "action": {
+      "default_icon": "popups/images/favicon.png",
+      "default_popup": "popups/index.html"
+   },
+   "content_scripts": [ {
+      "js": [ "content.js" ],
+      "matches": [ "<all_urls>" ]
+   } ],
+   "icons": {
+      "32": "popups/images/favicon.png"
+   },
+   
+   "name": "note it",
+   "permissions": [ "contextMenus", "tabs", "activeTab", "storage", "downloads" ],
+   "host_permissions":[
+      "http://*/", "https://*/"
+   ],
+   "version": "1.0",
+   "web_accessible_resources": [ {
+      "resources":["images/*.jpg"],
+      "matches":["<all_urls>"]
+   } ]
+}

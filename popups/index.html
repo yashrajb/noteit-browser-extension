@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+		<title>Note It - chrome extension for students and</title>
+<head>
+<link rel="stylesheet" href="./css/chota.css" />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+<style type="text/css">
+	body {
+		width:800px;
+		font-family: 'Open Sans'
+	}
+
+	.note_title {
+		padding:7px;
+		font-size:15px;
+	}
+	.note_sublist{
+		margin-left:10px;
+	}
+	.note{
+		cursor: pointer;
+	}
+	.note__title,.note__delete,.note__url {
+		margin-top:17px;
+	}
+	#search {
+	
+		border-bottom:0px;
+	}
+	.brand {
+		background:black;
+		color:white !important;
+
+		margin:3px 0px;
+	}
+	.delete__img,.link__img{
+		width:21px;
+	}
+	.nav {
+		margin:10px;
+	}
+	.sharelink__img{
+		width:23px;
+		margin:0px 45px;
+	}
+
+	#copied-text {
+		display:none;
+		-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  		animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	min-width: 250px;
+	background:black;
+	color:white;
+	margin-left: -125px;
+	border-radius: 2px;
+	padding: 16px;
+	position: fixed;
+	z-index: 1;
+	left: 50%;
+	bottom: 30px;
+	text-align:center;
+	}
+	
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+	
+	
+</style>
+
+
+<script src="./js/mustache.js"></script>
+	<script src="./js/clipboard.min.js"></script>
+	<script src="./js/jquery.js"></script>
+	<script src="./js/main.js"></script>
+</head>
+
+
+<body>
+
+	<nav class="nav">
+		<div class="nav-left">
+			<a href="https://twitter.com/intent/tweet?text=Note it is a simple chrome extension that saves the content of the webpage. You can also share the link of your content and also you can export saved content as a text file https://notesit.netlify.app/ (via @yashrajbasan1)" target="_blank"><img src="./images/twitter.png" alt="yashraj twitter"/></a>
+			<a href="https://www.buymeacoffee.com/yashrajbasandev" target="_blank"><img src="./images/bmc-logo.svg" /></a>
+		</div>
+		<div class="nav-center" style="text-align:center">
+		  <span class="brand">note it</span>
+		</div>
+		<div class="nav-right">
+		
+			<a href="https://yashrajb.github.io" target="_blank">About developer</a>
+		
+		</div>
+	</nav>
+	<nav class="nav">
+		<div class="nav-left">
+			<input autocomplete="off" id="search" type="text" placeholder="search title..." />
+			
+		</div>
+		<div class="nav-right">
+		
+			<button id="exportData" type="button" class="button primary icon">Export All Data
+				<img src="https://icongr.am/feather/file.svg?size=16&amp;color=ffffff" alt="icon">
+			</button>
+		</div>
+		
+	</nav>
+	<div id="copied-text">copied!!</div>
+	
+	
+<script id="result" type="text/template">
+	<div data-title="{{title}}" class="card note">
+		<header>
+			<div class="row">
+				<div class="col-10 note__title">{{title}}</div>
+				<div class="col-1 note__url"><a href="{{url}}" target="_blank"><img class="link__img" src="./images/link.svg" alt="link icon"/></a></div>
+				<div class="col-1 note__delete"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
+			</div>
+		</header>
+			<div class="note_sublist" style="display:none;">
+				{{ #content }}
+				<div class="row">
+					<div class="col-9" style="text-align:justify">{{content}}</div>
+					<div class="col-2 share__link" data-clipboard-text="{{shareurl}}"><img src="./images/copy.svg" class="sharelink__img"/></div>
+					<div class="col-1 content__delete" data-content="{{content}}"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
+				</div>
+				{{/content}}
+			</div>
+			
+				  
+		
+			
+	</div>
+		             
+</script>
+
+<script src="./js/copy-link.js"></script>
+	
+
+
+<!--delete icon - https://uxwing.com/copy-icon/-->
+
+
+</body>
+</html>
