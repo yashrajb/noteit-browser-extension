@@ -1,30 +1,34 @@
+
+chrome.storage.onChanged.addListener(onChanged);
+let exportDataBtn = document.getElementById("exportData");
+function onChanged(changes, namespace) {
+  $("div.note").remove();
+  setData();
+}
+
 function deleteNote(element){
 
-               chrome.storage.local.get(['data'], function(result) {
+  chrome.storage.local.get(['data'], function(result) {
 
-                              $(`div[data-title="${element}"]`).remove();
-                              let data = result.data;
-                              delete data[element];
-          
-
-                 chrome.storage.local.set({data:data})
+                 $(`div[data-title="${element}"]`).remove();
+                 let data = result.data;
+                 delete data[element];
 
 
+    chrome.storage.local.set({data:data})
 
 
-               })
+
+
+  })
 
 
 }
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-  $("div.note").remove();
-  setData();
-});
-
 function setData(){
 
-               chrome.storage.local.get(['data'], function(result) {
+               chrome.storage.local.get(['data']).then(function(result) {
+                              
                               let notes = Object.keys(result.data);
                               var template = jQuery("#result").html();
                               notes.length?$("#exportData").removeAttr("disabled"):$("#exportData").attr("disabled",true);
@@ -59,7 +63,7 @@ function setData(){
 function deleteContent(el,node){
   let nodeContent = node.getAttribute("data-content");
  
-  chrome.storage.local.get(['data'], function(result) {
+  chrome.storage.local.get(['data']).then(function(result) {
 
     
     let data = result.data;
@@ -85,7 +89,7 @@ $("#search").on("keyup",function(e){
 function onSearch(e){
   $(".note").remove();
   var val = e.toLowerCase();
-  chrome.storage.local.get(['data'], function(result) {
+  chrome.storage.local.get(['data']).then(function(result) {
     let notes = Object.keys(result.data);
     var template = jQuery("#result").html();
     notes = val?notes.filter((element) => element.toLocaleLowerCase().includes(val)):notes;
@@ -116,38 +120,33 @@ function onSearch(e){
 }
 
 
-$("#exportData").on("click",function(){
+exportDataBtn.addEventListener("click",async function(){
 
-  let allNotes = document.querySelectorAll('div.note');
+  this.setAttribute("disabled",true);
 
-  chrome.storage.local.get(['data'], function(result) {
+  var worker = new Worker('js/worker.js');
+  let {data} = await chrome.storage.local.get(['data']);
+  var self = this;
 
-    let content = result.data;
-    let fileContent = '';
-    allNotes.forEach((item) => {
+  worker.postMessage(data);
+  
+  worker.onmessage = function(e) {
 
-      let data_title = item.getAttribute("data-title");
-     
-      fileContent += `${data_title}\n\n`;
-      content[data_title]['content'] && content[data_title]['content'].forEach((text) => {
-    
-        fileContent += `${text.content}\n\n`
-    
-      });
-    
-      fileContent += "\n\n"
-    
-    
-     })
-
-     let blob = new Blob([fileContent],{type: "text/plain"});
-     var url = URL.createObjectURL(blob);
+     let {data} = e;
+     let blob = new Blob([data.content],{type: "text/plain"});
+     let url = URL.createObjectURL(blob);
       chrome.downloads.download({
-        url: url, // The object URL can be used as download URL
+        url: url,
         filename:"my-notes.txt"
       });
+
+      self.removeAttribute("disabled");
+   };
+   
   
-  })
+
+  
+   
 
 
 })

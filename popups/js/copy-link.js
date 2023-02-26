@@ -1,25 +1,24 @@
-var clipboard = new ClipboardJS('.share__link');
+var copyLink = new ClipboardJS('.share__link');
+var copyContent = new ClipboardJS('.copy__content');
 
-clipboard.on('success', function(e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
+copyLink.on('success',(e) => onSuccess(e,"copied link!"));
+copyContent.on('success',(e) => onSuccess(e,"copied note!"));
+
+function onSuccess(e,message) {
+    
 
     (function(){
 
 
-        $("#copied-text").css({"display":"block"});
+        
+        $("#copied-text").html(message).css({"display":"block"});
 
-        setTimeout(function(){ $("#copied-text").css({"display":"none"}); }, 3000);
+        setTimeout(function(){ 
+            $("#copied-text").html('').css({"display":"none"}); 
+        }, 1000);
 
 
     })()   
 
-    //e.clearSelection();
-});
-
-
-clipboard.on('error', function(e) {
-               console.error('Action:', e.action);
-               console.error('Trigger:', e.trigger);
-});
+    
+}

@@ -17,6 +17,10 @@
 	.note_sublist{
 		margin-left:10px;
 	}
+	.note_sublist .content {
+		white-space:pre-line;
+		text-align:justify;
+	}
 	.note{
 		cursor: pointer;
 	}
@@ -39,9 +43,9 @@
 	.nav {
 		margin:10px;
 	}
-	.sharelink__img{
-		width:23px;
-		margin:0px 45px;
+	.copy__img,.sharelink__img{
+		width:21px;
+		
 	}
 
 	#copied-text {
@@ -85,10 +89,10 @@
 </style>
 
 
-<script src="./js/mustache.js"></script>
+	<script src="./js/mustache.js"></script>
 	<script src="./js/clipboard.min.js"></script>
 	<script src="./js/jquery.js"></script>
-	<script src="./js/main.js"></script>
+	
 </head>
 
 
@@ -114,14 +118,14 @@
 			
 		</div>
 		<div class="nav-right">
-		
+			
 			<button id="exportData" type="button" class="button primary icon">Export All Data
 				<img src="https://icongr.am/feather/file.svg?size=16&amp;color=ffffff" alt="icon">
 			</button>
 		</div>
 		
 	</nav>
-	<div id="copied-text">copied!!</div>
+	<div id="copied-text"></div>
 	
 	
 <script id="result" type="text/template">
@@ -129,16 +133,17 @@
 		<header>
 			<div class="row">
 				<div class="col-10 note__title">{{title}}</div>
-				<div class="col-1 note__url"><a href="{{url}}" target="_blank"><img class="link__img" src="./images/link.svg" alt="link icon"/></a></div>
-				<div class="col-1 note__delete"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
+				<div class="col-1 note__url" title="link of webpage"><a href="{{url}}" target="_blank"><img class="link__img" src="./images/link.svg" alt="link icon"/></a></div>
+				<div class="col-1 note__delete" title="delete all notes"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
 			</div>
 		</header>
 			<div class="note_sublist" style="display:none;">
 				{{ #content }}
 				<div class="row">
-					<div class="col-9" style="text-align:justify">{{content}}</div>
-					<div class="col-2 share__link" data-clipboard-text="{{shareurl}}"><img src="./images/copy.svg" class="sharelink__img"/></div>
-					<div class="col-1 content__delete" data-content="{{content}}"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
+					<div class="col-9 content">{{content}}</div>
+					<div class="col-1 copy__content" title="Copy Note" data-clipboard-text="{{content}}"><img src="./images/copy.svg" class="copy__img"/></div>
+					<div class="col-1 share__link" title="Copy Link" data-clipboard-text="{{shareurl}}"><img src="./images/link.svg" class="sharelink__img"/></div>
+					<div class="col-1 content__delete" title="Delete Note" data-content="{{content}}"><img class="delete__img" src="./images/trash.svg" alt="link icon"/></div>
 				</div>
 				{{/content}}
 			</div>
@@ -150,8 +155,8 @@
 		             
 </script>
 
+<script src="./js/main.js"></script>
 <script src="./js/copy-link.js"></script>
-	
 
 
 <!--delete icon - https://uxwing.com/copy-icon/-->
