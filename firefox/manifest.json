@@ -1,0 +1,30 @@
+{
+   "manifest_version": 2,
+   "version": "3.0",
+   "name": "note it",
+   "description": "Adds a sidebar offerin a file picker and drap and drop zone. When an image file is chosen the active tab's body content is replaced with file selected. See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples#imagify",
+   "background": {
+      "page": "./background.html"
+   },
+   "browser_action": {
+      "default_icon": "./popups/images/favicon.png",
+      "default_popup": "./popups/index.html"
+   },
+   "icons": {
+      "32": "popups/images/favicon.png"
+   },
+   "content_security_policy": "script-src 'self' object-src 'self'",
+   "content_scripts": [ {
+      "js": ["./content.js"],
+      "matches": [ "<all_urls>" ]
+   } ],   
+   "permissions": [ "contextMenus", "tabs", "activeTab", "storage", "downloads"],
+   "web_accessible_resources": [
+     "images/*.jpg"
+   ],
+   "browser_specific_settings": {
+      "gecko": {
+        "id": "{a1083ace-8ea3-4035-9bf3-2eefc3ab351e}"
+      }
+    }
+}

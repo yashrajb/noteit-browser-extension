@@ -1,6 +1,7 @@
 {
    "manifest_version": 3,
    "background": {
+      "scripts":["background.js"],
       "service_worker": "background.js",
       "type":"module"
    },
@@ -25,5 +26,10 @@
    "web_accessible_resources": [ {
       "resources":["images/*.jpg"],
       "matches":["<all_urls>"]
-   } ]
+   } ],
+   "browser_specific_settings": {
+      "gecko": {
+        "id": "yashrajbasan6@gmail.com"
+      }
+    }
 }
