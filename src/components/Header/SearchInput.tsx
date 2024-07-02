@@ -2,6 +2,8 @@ import { useStore } from "@app/hooks/useStore";
 import LocalStorage from "@app/storage";
 import React, { ChangeEvent } from "react";
 
+const DEBOUNCE_TIMEOUT = 1500;
+
 const SearchInput = () => {
   const { notes, setNotes } = useStore();
   let timeTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -24,7 +26,7 @@ const SearchInput = () => {
       }
 
       setNotes(newNotes);
-    }, 2000);
+    }, DEBOUNCE_TIMEOUT);
   };
 
   return (
