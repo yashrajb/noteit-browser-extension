@@ -1,14 +1,14 @@
-import { INote } from '@app/notes/notes.types'
+import { INote } from "@app/notes/notes.types";
 
 class LocalStorage {
-  static instance: LocalStorage
+  static instance: LocalStorage;
 
   constructor() {
     if (!LocalStorage.instance) {
-      LocalStorage.instance = this
+      LocalStorage.instance = this;
     }
 
-    return LocalStorage.instance
+    return LocalStorage.instance;
   }
 
   /**
@@ -19,10 +19,10 @@ class LocalStorage {
 
   async get() {
     try {
-      let data = await chrome.storage.local.get(['data'])
-      return data.data
+      let data = await browser.storage.local.get(["data"]);
+      return data.data;
     } catch (err: any) {
-      throw new Error('Error in get function of LocalStorage', err)
+      throw new Error("Error in get function of LocalStorage", err);
     }
   }
 
@@ -34,10 +34,10 @@ class LocalStorage {
    */
   async set(data: { [key: string]: INote }) {
     try {
-      console.log('in localstorage set', data)
-      return await chrome.storage.local.set({ data })
+      console.log("in localstorage set", data);
+      return await browser.storage.local.set({ data });
     } catch (err: any) {
-      throw new Error('Error in set function of LocalStorage', err)
+      throw new Error("Error in set function of LocalStorage", err);
     }
   }
 
@@ -46,7 +46,7 @@ class LocalStorage {
    * @param {Function} callback - The callback function to be called when the storage changes.
    */
   onChangeListener(callback: () => {}) {
-    chrome.storage.onChanged.addListener(callback)
+    browser.storage.onChanged.addListener(callback);
   }
 
   /**
@@ -54,10 +54,10 @@ class LocalStorage {
    * @param {Function} callback - The callback function to be removed.
    */
   removeOnChangeListener(callback: () => {}) {
-    chrome.storage.onChanged.removeListener(callback)
+    browser.storage.onChanged.removeListener(callback);
   }
 }
 
-const instance = new LocalStorage()
+const instance = new LocalStorage();
 
-export default instance as LocalStorage
+export default instance as LocalStorage;

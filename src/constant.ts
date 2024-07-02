@@ -17,7 +17,7 @@ export const EVENTS = {
 export const links: ILinks[] = [
   {
     title: "twitter",
-    href: `https://twitter.com/intent/tweet?text=Note it is a simple chrome extension that saves the content of the webpage. You can also share the link of your content and also you can export saved content as a text file ${MAIN_URL} (via @yashrajbasan1)`,
+    href: `https://twitter.com/intent/tweet?text=Note it is a simple browser extension that saves the content of the webpage. You can also share the link of your content and also you can export saved content as a text file ${MAIN_URL} (via @yashrajbasan1)`,
     imgSrc: twitterLogo,
   },
   {

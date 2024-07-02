@@ -1,4 +1,4 @@
-import { EVENTS } from '@app/constant'
+import { EVENTS } from "@app/constant";
 
 /**
  * Content scripts are files that run in the context of web pages.
@@ -9,7 +9,17 @@ import { EVENTS } from '@app/constant'
 
 class ContentScript {
   constructor() {
-    chrome.runtime.onMessage.addListener(this.onMessage)
+    browser.runtime.onMessage.addListener(function (
+      request: any,
+      sender: browser.runtime.MessageSender,
+      sendResponse: (response?: any) => void
+    ) {
+      console.log("in content script");
+      if (request.event === EVENTS["SELECTION"]) {
+        let selection = window.getSelection() as Selection;
+        sendResponse(selection.toString());
+      }
+    });
   }
 
   /**
@@ -18,20 +28,9 @@ class ContentScript {
    * If so, it gets the text selection from the current webpage and sends it back as a response.
    *
    * @param {any}
-   * @param {chrome.runtime.MessageSender} .
+   * @param {browser.runtime.MessageSender} .
    * @param {Function}
    */
-
-  onMessage(
-    request: any,
-    sender: chrome.runtime.MessageSender,
-    sendResponse: (response?: any) => void,
-  ) {
-    if (request.event === EVENTS['SELECTION']) {
-      let selection = window.getSelection() as Selection
-      sendResponse(selection.toString())
-    }
-  }
 }
 
-new ContentScript()
+new ContentScript();

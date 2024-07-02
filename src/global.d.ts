@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import chrome from '@types/chrome'
-import * as firefox from '@types/firefox-webext-browser'
+import firefox from "@types/firefox-webext-browser";
 
-declare const __APP_VERSION__: string
+declare const browser: typeof import("webextension-polyfill");
+declare const __APP_VERSION__: string;

@@ -14,12 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["chrome"],
+    "types": ["firefox-webext-browser", "./src/global.d.ts"],
     "jsx": "react-jsx",
     "paths": {
       "@app/*": ["./src/*"],
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "./src/global.d.ts"]
 }

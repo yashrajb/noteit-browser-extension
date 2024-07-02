@@ -1,4 +1,4 @@
-export interface ITab extends chrome.tabs.Tab {
+export interface ITab extends browser.tabs.Tab {
   id: number;
   title: string;
   url: string;
