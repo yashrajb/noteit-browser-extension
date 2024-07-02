@@ -1,0 +1,29 @@
+.nav {
+  padding: 10px !important;
+  img {
+    width: 30px;
+  }
+
+  .brand {
+    background-color: black;
+    color: white !important;
+    font-size: 30px !important;
+  }
+  #search {
+    border-bottom: 0px;
+  }
+
+  .exportBtn {
+    line-height: unset !important;
+    padding: 15px !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .disableDropdown {
+    background-color: #d2d6dd !important;
+    pointer-events: none; /* prevents click events */
+    user-select: none; /* prevents text selection */
+    cursor: block;
+  }
+}
