@@ -14,7 +14,7 @@ const ExportNotesBtn = () => {
   const { notes } = useStore();
   const isNotesEmpty = useMemo(
     () => Boolean(Object.keys(notes).length),
-    [notes]
+    [notes],
   );
   console.log("isNotesEmpty", isNotesEmpty);
   const [disableBtn, setDisableBtn] = useState(false);
@@ -22,7 +22,7 @@ const ExportNotesBtn = () => {
 
   const onExport = async (
     e: React.MouseEvent,
-    fileExtension: IWorkerFIleExt["fileExtension"]
+    fileExtension: IWorkerFIleExt["fileExtension"],
   ) => {
     try {
       console.log("in export", fileExtension);

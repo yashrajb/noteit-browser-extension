@@ -1,6 +1,7 @@
+import React, { ChangeEvent } from "react";
 import { useStore } from "@app/hooks/useStore";
 import LocalStorage from "@app/storage";
-import React, { ChangeEvent } from "react";
+
 
 const DEBOUNCE_TIMEOUT = 1500;
 
@@ -13,7 +14,7 @@ const SearchInput = () => {
     const pattern = e?.target?.value?.toLowerCase();
     let data = await LocalStorage.get();
     if (!pattern) {
-      setNotes(data);
+      setNotes(data)
       return;
     }
 

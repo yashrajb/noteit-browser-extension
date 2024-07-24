@@ -1,8 +1,8 @@
-import React from "react";
-import ExportNotesBtn from "./ExportNotesBtn";
-import "./index.scss";
-import { SearchInput } from "./SearchInput";
-import { MAIN_URL, links } from "@app/constant";
+import React from "react"
+import ExportNotesBtn from "./ExportNotesBtn"
+import "./index.scss"
+import { SearchInput } from "./SearchInput"
+import { MAIN_URL, links } from "@app/constant"
 
 const Header = () => {
   return (
@@ -17,7 +17,7 @@ const Header = () => {
               <a href={href} target="_blank">
                 <img src={imgSrc} alt={title} />
               </a>
-            );
+            )
           })}
           <a href={MAIN_URL} target="_blank">
             About
@@ -33,7 +33,7 @@ const Header = () => {
         </div>
       </nav>
     </>
-  );
-};
+  )
+}
 
-export { Header };
+export { Header }
