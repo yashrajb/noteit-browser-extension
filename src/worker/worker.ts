@@ -1,5 +1,5 @@
-import { INote, ISubNote } from '@app/notes/notes.types'
-import { IWorker } from './worker.types'
+import { INote, ISubNote } from "@app/notes/notes.types"
+import { IWorker } from "./worker.types"
 
 /**
  * A web worker is a JavaScript script that runs in the background,
@@ -18,11 +18,12 @@ import { IWorker } from './worker.types'
 self.onmessage = async function (e: MessageEvent<IWorker>) {
   const { fileExtension } = e.data
   const data = e.data.data
-  console.log('hello from worker')
   let allNotes = Object.keys(data)
 
   const fileContent =
-    fileExtension == 'txt' ? exportAsText(allNotes, data) : exportAsMarkdown(allNotes, data)
+    fileExtension == "txt"
+      ? exportAsText(allNotes, data)
+      : exportAsMarkdown(allNotes, data)
 
   self.postMessage({ content: fileContent })
   return
@@ -41,7 +42,7 @@ function exportAsText(
     [key: string]: INote
   },
 ): string {
-  let fileContent = ''
+  let fileContent = ""
   allNotes.forEach((item, index) => {
     let { url, subNotes } = data[item] as INote
     const title = `${index + 1}. ${item}\n`
@@ -55,7 +56,7 @@ function exportAsText(
       })
     }
 
-    fileContent += '\n\n'
+    fileContent += "\n\n"
   })
   return fileContent
 }
@@ -67,8 +68,11 @@ function exportAsText(
  * @returns {string}
  */
 
-function exportAsMarkdown(allNotes: string[], data: { [key: string]: INote }): string {
-  let fileContent = ''
+function exportAsMarkdown(
+  allNotes: string[],
+  data: { [key: string]: INote },
+): string {
+  let fileContent = ""
   allNotes.forEach((item, index) => {
     let { url, subNotes } = data[item]
     const title = `# ${index + 1}. ${item}\n`
@@ -81,7 +85,7 @@ function exportAsMarkdown(allNotes: string[], data: { [key: string]: INote }): s
         fileContent += subNote
       })
     }
-    fileContent += '\n\n'
+    fileContent += "\n\n"
   })
   return fileContent
 }

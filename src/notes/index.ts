@@ -1,7 +1,7 @@
-import { MAIN_URL } from "@app/constant";
-import { IAddNote, INote, ISubNote } from "./notes.types";
-import LocalStorage from "@app/storage";
-import { AES } from "crypto-js";
+import { MAIN_URL } from "@app/constant"
+import { IAddNote, INote, ISubNote } from "./notes.types"
+import LocalStorage from "@app/storage"
+import { AES } from "crypto-js"
 
 /**
  * Notes class handles creating shareable url,
@@ -10,7 +10,7 @@ import { AES } from "crypto-js";
  */
 
 class Notes {
-  static instance: Notes;
+  static instance: Notes
 
   /**
    * Creates a singleton instance of the Notes class.
@@ -19,9 +19,9 @@ class Notes {
 
   constructor() {
     if (!Notes.instance) {
-      Notes.instance = this;
+      Notes.instance = this
     }
-    return Notes.instance;
+    return Notes.instance
   }
 
   /**
@@ -35,12 +35,12 @@ class Notes {
     try {
       let encryptedContent = AES.encrypt(
         JSON.stringify({ title, content, url }),
-        ""
-      ).toString();
-      let shareableUrl = `${MAIN_URL}/notes/?q=${encodeURIComponent(encryptedContent)}`;
-      return shareableUrl;
+        "",
+      ).toString()
+      let shareableUrl = `${MAIN_URL}/notes/?q=${encodeURIComponent(encryptedContent)}`
+      return shareableUrl
     } catch (e: any) {
-      throw new Error("Error in generateUrl function of notes", e);
+      throw new Error("Error in generateUrl function of notes", e)
     }
   }
 
@@ -53,10 +53,10 @@ class Notes {
 
   private async isNoteExists(title: string) {
     try {
-      let data = await LocalStorage.get();
-      return data[title] ? true : false;
+      let data = await LocalStorage.get()
+      return data[title] ? true : false
     } catch (e: any) {
-      throw new Error("Error in isNoteExists function of notes", e);
+      throw new Error("Error in isNoteExists function of notes", e)
     }
   }
 
@@ -69,27 +69,27 @@ class Notes {
 
   async add({ title, content, url }: IAddNote) {
     try {
-      const data = await LocalStorage.get();
-      const shareableUrl = this.generateUrl({ title, content, url });
-      const doesNoteExists = await this.isNoteExists(title);
+      const data = await LocalStorage.get()
+      const shareableUrl = this.generateUrl({ title, content, url })
+      const doesNoteExists = await this.isNoteExists(title)
       const newNote: ISubNote = {
         text: content,
         url: shareableUrl,
-      };
+      }
       if (doesNoteExists) {
-        data[title]["subNotes"].push(newNote);
+        data[title]["subNotes"].push(newNote)
       } else {
         data[title] = {
           title,
           url,
           subNotes: [newNote],
-        };
+        }
       }
 
-      await LocalStorage.set(data);
-      return true;
+      await LocalStorage.set(data)
+      return true
     } catch (e: any) {
-      throw new Error("Error in add function of notes", e);
+      throw new Error("Error in add function of notes", e)
     }
   }
 
@@ -102,11 +102,11 @@ class Notes {
 
   async delete(title: string) {
     try {
-      const data = await LocalStorage.get();
-      delete data[title];
-      await LocalStorage.set(data);
+      const data = await LocalStorage.get()
+      delete data[title]
+      await LocalStorage.set(data)
     } catch (e: any) {
-      throw new Error("Error in delete function of notes", e);
+      throw new Error("Error in delete function of notes", e)
     }
   }
 
@@ -120,18 +120,17 @@ class Notes {
 
   async deleteSubNote(title: string, index: number) {
     try {
-      console.log(title, index);
       if (await this.isNoteExists(title)) {
-        const data = await LocalStorage.get();
-        const note: INote = data[title];
-        note.subNotes = note?.subNotes?.filter((content, i) => i !== index);
-        await LocalStorage.set(data);
+        const data = await LocalStorage.get()
+        const note: INote = data[title]
+        note.subNotes = note?.subNotes?.filter((content, i) => i !== index)
+        await LocalStorage.set(data)
       }
     } catch (e: any) {
-      throw new Error("Error in deleteSubNote function of notes", e);
+      throw new Error("Error in deleteSubNote function of notes", e)
     }
   }
 }
 
-const instanceOfNotes = new Notes();
-export default instanceOfNotes as Notes;
+const instanceOfNotes = new Notes()
+export default instanceOfNotes as Notes

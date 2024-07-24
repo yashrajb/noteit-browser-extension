@@ -1,34 +1,33 @@
-import React, { useEffect, useMemo, useState } from "react";
-import ReactDOM from "react-dom/client";
-import { Header } from "@app/components/Header";
-import { Context, IContext } from "@app/store/Context";
-import "chota/dist/chota.min.css";
-import "./index.css";
-import LocalStorage from "@app/storage";
-import { NoteList } from "@app/components/NoteList";
+import React, { useEffect, useMemo, useState } from "react"
+import ReactDOM from "react-dom/client"
+import { Header } from "@app/components/Header"
+import { Context, IContext } from "@app/store/Context"
+import "chota/dist/chota.min.css"
+import "./index.css"
+import LocalStorage from "@app/storage"
+import { NoteList } from "@app/components/NoteList"
 
 const App = () => {
-  const [notes, setNotes] = useState({});
-  const [showClipboardMessage, setClipboardMessage] = useState("");
+  const [notes, setNotes] = useState({})
+  const [showClipboardMessage, setClipboardMessage] = useState("")
   const getLocalData = async function () {
     try {
-      const data = await LocalStorage.get();
-      console.log("in getLocalData", data);
-      setNotes(data || {});
+      const data = await LocalStorage.get()
+      setNotes(data || {})
     } catch (error) {
-      console.error("Error getLocalData data:", error);
+      console.error("Error getLocalData data:", error)
     }
-  };
+  }
 
   useEffect(() => {
-    getLocalData();
+    getLocalData()
 
-    LocalStorage.onChangeListener(getLocalData);
+    LocalStorage.onChangeListener(getLocalData)
 
     return () => {
-      LocalStorage.removeOnChangeListener(getLocalData);
-    };
-  }, []);
+      LocalStorage.removeOnChangeListener(getLocalData)
+    }
+  }, [])
 
   return (
     <React.StrictMode>
@@ -49,9 +48,9 @@ const App = () => {
         )}
       </Context.Provider>
     </React.StrictMode>
-  );
-};
+  )
+}
 
 ReactDOM.createRoot(document.getElementById("app") as HTMLElement).render(
-  <App />
-);
+  <App />,
+)

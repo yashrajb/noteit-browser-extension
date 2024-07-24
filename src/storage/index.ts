@@ -1,4 +1,4 @@
-import { INote } from '@app/notes/notes.types'
+import { INote } from "@app/notes/notes.types"
 
 class LocalStorage {
   static instance: LocalStorage
@@ -19,10 +19,10 @@ class LocalStorage {
 
   async get() {
     try {
-      let data = await chrome.storage.local.get(['data'])
+      let data = await chrome.storage.local.get(["data"])
       return data.data
     } catch (err: any) {
-      throw new Error('Error in get function of LocalStorage', err)
+      throw new Error("Error in get function of LocalStorage", err)
     }
   }
 
@@ -34,10 +34,9 @@ class LocalStorage {
    */
   async set(data: { [key: string]: INote }) {
     try {
-      console.log('in localstorage set', data)
       return await chrome.storage.local.set({ data })
     } catch (err: any) {
-      throw new Error('Error in set function of LocalStorage', err)
+      throw new Error("Error in set function of LocalStorage", err)
     }
   }
 
