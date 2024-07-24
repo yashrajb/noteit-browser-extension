@@ -5,19 +5,25 @@
   }
 
   .brand {
+    border: 3px solid black;
     background-color: black;
     color: white !important;
-    font-size: 30px !important;
+    font-size: 28px !important;
   }
   #search {
     border-bottom: 0px;
   }
 
-  .exportBtn {
-    line-height: unset !important;
-    padding: 15px !important;
-    display: flex;
-    align-items: center;
+  .exportBtnContainer {
+    .exportBtn {
+      line-height: unset !important;
+      padding: 15px !important;
+      display: flex;
+      align-items: center;
+    }
+    .card a {
+      cursor: pointer;
+    }
   }
 
   .disableDropdown {
@@ -25,5 +31,6 @@
     pointer-events: none; /* prevents click events */
     user-select: none; /* prevents text selection */
     cursor: block;
+    color: white;
   }
 }
