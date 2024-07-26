@@ -1,4 +1,4 @@
-import { EVENTS } from '@app/constant'
+import { EVENTS } from "@app/constant"
 
 /**
  * Content scripts are files that run in the context of web pages.
@@ -7,7 +7,7 @@ import { EVENTS } from '@app/constant'
  * and pass information to their parent extension.
  */
 
-class ContentScript {
+export class ContentScript {
   constructor() {
     chrome.runtime.onMessage.addListener(this.onMessage)
   }
@@ -27,7 +27,7 @@ class ContentScript {
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: any) => void,
   ) {
-    if (request.event === EVENTS['SELECTION']) {
+    if (request.event === EVENTS["SELECTION"]) {
       let selection = window.getSelection() as Selection
       sendResponse(selection.toString())
     }

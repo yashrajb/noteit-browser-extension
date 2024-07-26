@@ -1,6 +1,6 @@
-import { EVENTS } from '@app/constant'
-import { ITab } from './background.types'
-import Notes from '@app/notes'
+import { EVENTS } from "@app/constant"
+import { ITab } from "./background.types"
+import Notes from "@app/notes"
 
 /**
  * Background scripts or a background page enable you to monitor and react to events
@@ -8,7 +8,7 @@ import Notes from '@app/notes'
  * a tab.
  */
 
-class BackGroundScript {
+export class BackGroundScript {
   constructor() {
     chrome.runtime.onInstalled.addListener(this.onInstalled)
 
@@ -26,16 +26,19 @@ class BackGroundScript {
    */
 
   async onInstalled(details: chrome.runtime.InstalledDetails) {
-    if (details.reason == 'install') {
-      await chrome.storage.local
-        .set({ data: {} })
-        .catch((e) => console.log('Error on onInstalled Function in background.js', e))
+    try {
+      if (details.reason == "install") {
+        await chrome.storage.local.set({ data: {} })
+      }
+      chrome.contextMenus.create({
+        id: EVENTS["SELECTION"],
+        title: "Note It",
+        contexts: ["selection"],
+      })
+    } catch (e: unknown | Error | any) {
+      console.log("Error on onInstalled Function in background.js", e)
+      throw new Error(e)
     }
-    chrome.contextMenus.create({
-      id: EVENTS['SELECTION'],
-      title: 'Note It',
-      contexts: ['selection'],
-    })
   }
 
   /**
@@ -49,19 +52,25 @@ class BackGroundScript {
    * @return {void}
    */
 
-  async onClickedContext(info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) {
+  async onClickedContext(
+    info: chrome.contextMenus.OnClickData,
+    tab?: chrome.tabs.Tab,
+  ) {
     try {
-      if (!tab || info.menuItemId != EVENTS['SELECTION']) {
+      if (!tab || info.menuItemId != EVENTS["SELECTION"]) {
         return
       }
       const typedTab: ITab = tab as ITab
-      const response = await chrome.tabs.sendMessage(typedTab.id, { event: info.menuItemId })
+      const response = await chrome.tabs.sendMessage(typedTab.id, {
+        event: info.menuItemId,
+      })
       await Notes.add({
         title: typedTab.title,
         content: response,
         url: typedTab.url,
       })
     } catch (err: any) {
+      console.log("Error in onClickedContext function in background.js", err)
       throw new Error(err)
     }
   }
